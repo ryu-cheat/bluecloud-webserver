@@ -34,6 +34,15 @@ app.use(require('cors')());
 app.use(express.json());
 
 app.use('/contact', require('./routes/contact'));
+app.use('/editbase', require('./routes/editbase'));
+
+app.use('/base.js', (req, res) => {
+    // cloudflare에서 캐시하지 않게
+    res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
+    res.sendFile(path.join(__dirname, 'base.js'));
+});
 
 app.use(express.static(path.join(__dirname, 'web')));
 
